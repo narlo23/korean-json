@@ -45,8 +45,11 @@ app.use(cors());
 // public folder
 app.use(express.static(path.join(__dirname, 'public')));
 // view engine
+/*
 app.engine('handlebars', exphbs());
-app.set('view engine', 'handlebars');
+*/
+const { engine } = require('express-handlebars')
+app.set('view engine', engine);
 
 // routes
 app.get('/', async (req, res) => {
@@ -63,7 +66,11 @@ app.use('/paragraph', paragraphRouter);
 
 // connect to database and run seeders
 sequelize.sync();
-
+/*
+seeders.firstGroup();
+seeders.secondGroup();
+seeders.thirdGroup();
+*/
 // start server
 const port = parseInt(process.env.PORT) || 5000;
 app.set('port', port);
