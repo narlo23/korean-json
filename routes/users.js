@@ -19,8 +19,10 @@ router.get('/', cache('1 week'), async (req, res) => {
   res.json(users);
 });
 
-router.post('/', (req, res) => {
-  res.status(201).json(req.body);
+router.post('/', async (req, res) => {
+  /* name, username, email, city 필수값 */
+  const user = await User.create(req.body)
+  res.status(201).json(user);
 });
 
 router.get('/:id', async (req, res) => {
@@ -32,6 +34,7 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const user = await User.findByPk(id);
+  await user.update(req.body)
   res.status(200).json(user);
 });
 
