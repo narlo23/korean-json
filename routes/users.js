@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const user = await User.findByPk(id);
-  res.json(user);
+  res.status(200).json(user);
 });
 
 router.put('/:id', async (req, res) => {
@@ -41,7 +41,8 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   const user = await User.findByPk(id);
-  res.status(202).end(JSON.stringify(user, null, 2));
+  await User.destroy({where: {id:id}})
+  res.status(200).json(user);
 });
 
 module.exports = router;
